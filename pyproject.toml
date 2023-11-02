@@ -1,0 +1,42 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[project]
+authors = [{name = "Xu Chaoqian", email = "chaoranxu@gmail.com"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "websockets >= 11.0.3",
+  "maxwell-protocol == 0.7.0",
+]
+description = "The maxwell utils implementation for python."
+license = {file = "LICENSE"}
+name = "maxwell-utils"
+readme = "README.md"
+requires-python = ">=3.7"
+version = "0.5.0"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli_format = "[%(levelname)8s] %(asctime)s (%(filename)s:%(lineno)s) %(message)s"
+log_cli_level = "DEBUG"
+
+[project.optional-dependencies]
+test = ["pytest >= 7.2.0", "pytest-asyncio >= 0.20.3", "pytest-cov[all]"]
+
+[project.urls]
+changelog = "https://github.com/maxwell-dev/maxwell-utils-python/CHANGELOG.md"
+repository = "https://github.com/maxwell-dev/maxwell-utils-python"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.setuptools.packages.find]
+where = [
+  "maxwell",
+] # list of folders that contain the packages (["."] by default)
