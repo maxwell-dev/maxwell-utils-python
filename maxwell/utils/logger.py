@@ -35,7 +35,7 @@ def __init(
         logging.basicConfig(level=default_level)
 
 
-def get_instance(name):
+def get_logger(name):
     global inited
     if not inited:
         __init()
@@ -44,5 +44,5 @@ def get_instance(name):
 
 
 if __name__ == "__main__":
-    logger = get_instance(__name__)
+    logger = get_logger(__name__)
     logger.info("hello %s", "world")
