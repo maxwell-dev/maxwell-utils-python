@@ -39,8 +39,8 @@ set-path:
 run:
 	$(python) $(filter-out $@, $(MAKECMDGOALS))
 
-test:
-	$(pytest)
+pytest:
+	$(pytest) --cov=./ test/
 
 publish:
 	python3 -m build && twine check dist/* && twine upload -r pypi dist/*

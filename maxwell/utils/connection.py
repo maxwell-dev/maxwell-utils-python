@@ -1,15 +1,14 @@
 import enum
 import asyncio
-import traceback
-import logging
 import websockets
 from abc import ABC, abstractmethod
 from typing import Callable
 import maxwell.protocol.maxwell_protocol_pb2 as protocol_types
 import maxwell.protocol.maxwell_protocol as protocol
 from .listenable import Listenable
+from .logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class Event(enum.Enum):
@@ -139,7 +138,7 @@ class Connection(AbstractConnection):
         except Exception as e:
             raise e
         finally:
-            self.__request_futures.pop(ref)
+            self.__request_futures.pop(ref, None)
 
     # ===========================================
     # tasks

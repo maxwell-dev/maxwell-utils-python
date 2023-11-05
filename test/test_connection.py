@@ -1,10 +1,9 @@
-import logging
 import pytest
 import maxwell.protocol.maxwell_protocol_pb2 as protocol_types
-import maxwell.protocol.maxwell_protocol as protocol
 from maxwell.utils.connection import Connection, MultiAltEndpointsConnection
+from maxwell.utils.logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class TestConnection:
@@ -18,6 +17,7 @@ class TestConnection:
         reply = await conn.request(msg)
         expected = protocol_types.ping_rep_t()
         expected.ref = 1
+        assert reply == expected
         await conn.close()
 
 
