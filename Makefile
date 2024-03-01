@@ -8,7 +8,7 @@ pip := $(venv-dir)/bin/pip
 pip-compile := $(venv-dir)/bin/pip-compile
 
 define get_site_dir
-$(shell $(python) -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+$(shell $(python) -c "import sysconfig; print(sysconfig.get_path(\"purelib\"))")
 endef
 
 prepare-dev: create-env create-dirs install-build-tools install-dev-deps set-path
@@ -26,11 +26,11 @@ install-build-tools:
 	$(pip) install pip-tools
 
 install-prod-deps:
-	$(pip-compile) -v
+	$(pip-compile) --strip-extras -v
 	$(pip) install -r requirements.txt
 
 install-dev-deps:
-	$(pip-compile) -v
+	$(pip-compile) --strip-extras -v
 	$(pip) install -e .[test]
 
 set-path:
@@ -43,10 +43,10 @@ pytest:
 	$(pytest) --cov=./ test/
 
 publish:
-	python3 -m build && twine check dist/* && twine upload -r pypi dist/*
+	$(python) -m build && twine check dist/* && twine upload -r pypi dist/*
 
 publish-test:
-	python3 -m build && twine check dist/* && twine upload -r pypitest dist/*
+	$(python) -m build && twine check dist/* && twine upload -r pypitest dist/*
 
 clean:
 	rm -rf $(venv-dir) 
@@ -55,3 +55,4 @@ clean:
 	rm -rf $(prj-dir)/maxwell/__pycache__ $(prj-dir)/maxwell/utils/__pycache__
 	rm -rf $(prj-dir)/test/__pycache__
 	rm -rf $(prj-dir)/.pytest_cache
+	rm -rf log

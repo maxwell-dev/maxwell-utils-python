@@ -1,5 +1,5 @@
-import enum
 import asyncio
+import enum
 import websockets
 from abc import ABC, abstractmethod
 from typing import Callable
@@ -107,9 +107,6 @@ class Connection(AbstractConnection):
         self.__toggle_to_close()
         self.__add_repeat_reconnect_task()
         self.__add_repeat_receive_task()
-
-    def __del__(self):
-        asyncio.ensure_future(self.close())
 
     async def close(self):
         self.__should_run = False
@@ -257,6 +254,7 @@ class Connection(AbstractConnection):
             return
         except Exception as e:
             logger.error("Failed to receive: %s", e)
+            self.__toggle_to_close()
             self.__on_error(ErrorCode.FAILED_TO_RECEIVE)
             return
 
@@ -345,9 +343,6 @@ class MultiAltEndpointsConnection(AbstractConnection):
 
         self.__toggle_to_close()
         self.__add_connect_task()
-
-    def __del__(self):
-        asyncio.ensure_future(self.close())
 
     async def close(self):
         self.__should_run = False
