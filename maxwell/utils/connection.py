@@ -339,7 +339,7 @@ class MultiAltEndpointsConnection(AbstractConnection):
         self.__loop = loop if loop else asyncio.get_event_loop()
 
         self.__should_run = True
-        self.__connection: Optional[Connection] = None
+        self.__connection: Optional = None
         self.__open_event = asyncio.Event()
         self.__connect_task = None
 
