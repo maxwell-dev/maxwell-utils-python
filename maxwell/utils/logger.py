@@ -2,7 +2,7 @@ import json
 import logging
 import logging.config
 import os
-from distutils.sysconfig import get_python_lib
+import sysconfig
 
 inited = False
 
@@ -12,7 +12,9 @@ def __get_root_dir():
     root_dir = os.environ.get("APP_ROOT_DIR")
     if root_dir:
         return root_dir
-    return os.path.abspath(os.path.join(get_python_lib(), "..", "..", "..", ".."))
+    return os.path.abspath(
+        os.path.join(sysconfig.get_path("purelib"), "..", "..", "..", "..")
+    )
 
 
 def __init(
