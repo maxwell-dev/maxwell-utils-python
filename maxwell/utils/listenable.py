@@ -12,14 +12,14 @@ class Listenable(object):
 
     def add_listener(self, event, callback):
         callbacks = self.__listeners.get(event)
-        if callbacks == None:
+        if callbacks is None:
             callbacks = []
             self.__listeners[event] = callbacks
         callbacks.append(callback)
 
     def delete_listener(self, event, callback):
         callbacks = self.__listeners.get(event)
-        if callbacks == None:
+        if callbacks is None:
             return
         try:
             callbacks.remove(callback)
