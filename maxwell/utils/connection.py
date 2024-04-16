@@ -1,7 +1,7 @@
 import asyncio
 import enum
 from abc import ABC, abstractmethod
-from typing import Callable, Awaitable, Optional
+from typing import Callable, Awaitable
 
 import maxwell.protocol.maxwell_protocol as protocol
 import maxwell.protocol.maxwell_protocol_pb2 as protocol_types
@@ -339,7 +339,7 @@ class MultiAltEndpointsConnection(AbstractConnection):
         self.__loop = loop if loop else asyncio.get_event_loop()
 
         self.__should_run = True
-        self.__connection: Optional = None
+        self.__connection = None
         self.__open_event = asyncio.Event()
         self.__connect_task = None
 
