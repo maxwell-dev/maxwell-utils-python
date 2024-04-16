@@ -1,10 +1,12 @@
 import asyncio
 import enum
-import websockets
+import typing
 from abc import ABC, abstractmethod
-from typing import Callable
-import maxwell.protocol.maxwell_protocol_pb2 as protocol_types
+
 import maxwell.protocol.maxwell_protocol as protocol
+import maxwell.protocol.maxwell_protocol_pb2 as protocol_types
+import websockets
+
 from .listenable import Listenable
 from .logger import get_logger
 
@@ -324,7 +326,7 @@ class MultiAltEndpointsConnection(AbstractConnection):
     # ===========================================
     def __init__(
         self,
-        pick_endpoint: Callable[[], str],
+        pick_endpoint: typing.Callable[[], typing.Awaitable[str]],
         options={},
         event_handler=None,
         loop=None,

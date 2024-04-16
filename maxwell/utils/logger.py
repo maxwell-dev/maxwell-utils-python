@@ -1,16 +1,24 @@
-import os
 import json
 import logging
 import logging.config
+import os
 from distutils.sysconfig import get_python_lib
 
 inited = False
 
 
+def __get_root_dir():
+    """Get the root directory of the project."""
+    root_dir = os.environ.get("LANDBRIDGE_ROOT_DIR")
+    if root_dir:
+        return root_dir
+    return os.path.abspath(os.path.join(get_python_lib(), "..", "..", "..", ".."))
+
+
 def __init(
     default_path="logging.json", default_level=logging.INFO, env_var_key="LOG_CFG_FILE"
 ):
-    root_dir = os.path.abspath(os.path.join(get_python_lib(), "..", "..", "..", ".."))
+    root_dir = __get_root_dir()
 
     specified_config_path = os.getenv(env_var_key, None)
     if specified_config_path:
