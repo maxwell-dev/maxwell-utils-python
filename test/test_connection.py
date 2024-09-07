@@ -1,3 +1,4 @@
+import asyncio
 import pytest
 import maxwell.protocol.maxwell_protocol_pb2 as protocol_types
 from maxwell.utils.connection import Connection, MultiAltEndpointsConnection
@@ -11,6 +12,7 @@ class TestConnection:
     async def test_all(self):
         conn = Connection(
             endpoint="localhost:8081",
+            loop=asyncio.get_running_loop(),
         )
         await conn.wait_open()
         msg = protocol_types.ping_req_t()
@@ -26,10 +28,10 @@ class TestMultiAltEndpointsConnection:
         return "localhost:8081"
 
     @pytest.mark.asyncio
-    async def test_all(self, event_loop):
+    async def test_all(self):
         conn = MultiAltEndpointsConnection(
             pick_endpoint=self.__pick_endpoint,
-            loop=event_loop,
+            loop=asyncio.get_running_loop(),
         )
         await conn.wait_open()
         msg = protocol_types.ping_req_t()
