@@ -4,7 +4,7 @@
 #
 #    pip-compile --strip-extras
 #
-maxwell-protocol==0.9.1
+maxwell-protocol==0.9.2
     # via maxwell-utils (setup.py)
 protobuf==5.28.0
     # via maxwell-protocol
